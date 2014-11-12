@@ -33,5 +33,6 @@ public void onExit(Request request, ResponseSender responseSender) {
 ```Java
 scheduler.submit(()->{doSomething();}, "system", user.getId());
 ```
+4. 框架里还封装了一个和fcgi通讯的小工具，在我们项目里用于和PHP通讯之用。
 
 示例应用可以查看canoe-chat，因时间有限，无法提供完备的文档，对该代码有兴趣者取之，可随意修改以供己用。
