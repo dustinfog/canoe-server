@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+		http://www.springframework.org/schema/context
+		http://www.springframework.org/schema/context/spring-context-2.5.xsd
+		">
+	<context:component-scan base-package="com.googlecode.canoe.chat" />
+
+	<bean id="commandMapping" class="com.googlecode.canoe.spring.SpringCommandMapping" />
+	<bean id="sessionRoleManager"
+		class="com.googlecode.canoe.core.session.support.DefaultSessionRoleManager" />
+
+	<bean id="lifecycleHandler"
+		class="com.googlecode.canoe.core.server.support.DefaultLifecycleHandler">
+		<property name="commandMapping" ref="commandMapping" />
+		<property name="sessionRoleManager" ref="sessionRoleManager" />
+	</bean>
+
+	<bean id="messageCodec" class="com.googlecode.canoe.amf.AMFMessageCodec" />
+
+	<bean id="server" class="com.googlecode.canoe.mina.MinaCanoeServer">
+		<constructor-arg>
+			<value>10123</value>
+		</constructor-arg>
+		<property name="lifecycleHandler" ref="lifecycleHandler" />
+		<property name="messageCodec" ref="messageCodec" />
+	</bean>
+</beans>
